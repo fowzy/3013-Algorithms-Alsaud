@@ -70,19 +70,20 @@ public:
         Size++;
     }
 
+    // print out the tail (the last value of the linked list)
     void PrintTail()
     {
         cout << Tail->x << endl;
     }
-
+    // Function to print what's in the linked list used for the overloaded operator <<
     string Print()
-    { // Function to print what's in the linked list
-        Node *Temp = Head; 
-        string list;
+    { 
+        Node *Temp = Head; // a node to hold the head of linked list
+        string list; // make a string list
 
         while (Temp != NULL)
         {
-            list += to_string(Temp->x) + "->";
+            list += to_string(Temp->x) + "->"; // add to the string ->
             Temp = Temp->next;
         }
 
@@ -95,7 +96,8 @@ public:
         Size--;
         return 0; //
     }
-
+    // Operator overloading for + symbol
+    // which basically this one will helps us adding two objects or two linked list together
     List operator+(const List &Rhs)
     {
         // Create a new list that will contain both when done
@@ -112,7 +114,7 @@ public:
         }
 
         // Get a reference to head of Rhs
-        Temp = Rhs.Head;
+        Temp = Rhs.Head;  
 
         // Same as above, loop and push
         while (Temp != NULL)
@@ -125,20 +127,20 @@ public:
         return NewList;
     }
 
+    // Operator overloading [] which basically will get the index of certain element in that linked list
     // Implementation of [] operator.  This function returns an
     // int value as if the list were an array.
     int operator[](int index)
     {
-        Node *Temp = Head;
-
+        Node *Temp = Head;  // creating a temporary node that hold the head node
+        
         if (index >= Size)
-        {
+        {   // if the index is bigger than the linked list then return an error out of bounds
             cout << "Index out of bounds, exiting";
             exit(0);
         }
         else
         {
-
             for (int i = 0; i < index; i++)
             {
                 Temp = Temp->next;
@@ -146,7 +148,7 @@ public:
             return Temp->x;
         }
     }
-
+    // friend class to
     friend ostream &operator<<(ostream &os, List L)
     {
         os << L.Print();
@@ -172,12 +174,13 @@ int main(int argc, char **argv)
     }
 
     // cout << L1 << endl;
-    L1.PrintTail();
-    L2.PrintTail();
-
+    L1.PrintTail(); // print out the tail of the linked list number 1
+    L2.PrintTail(); // print out the tail of the linked list number 2
+    // We are  able to make linked list equal to Linked List 1 and 2 cause we had a operator overloading+
     List L3 = L1 + L2; // Creating linked list 3 (L3)
+    // we are able to print the linked list that way without needing to creating a print function cause we had overloading operator for << symbol
     cout << L3 << endl; // L3
-
+    // print out the 5th element of the linked list number 3
     cout << L3[5] << endl;
     return 0;
 }

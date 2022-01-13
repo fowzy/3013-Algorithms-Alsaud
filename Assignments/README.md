@@ -6,7 +6,7 @@
 |   2   | <a href="../../../">A02</a>     | Github Setup    |    🟢  | Completed|    01/13/2022  |
 |   3a   | <a href="A03a">A03a</a>     | Banner Page   |    🟢  | Completed| 01/18/2022  |
 |   3b   | <a href="A03b">A03b</a>     | Commenting C++ Code   |    🟢  | Completed| 01/18/2022  |
-|   4   | <a href="A04">A04</a>     | Resizing the Stack   |    🔴  | In progress| 01/27/2022  |
+|   4   | <a href="P01">A04</a>     | Resizing the Stack   |    🔴  | In progress| 01/27/2022  |
 |   5   | <a href="A05">A05</a>     | Test 1 / Various Topics   |    🔴  | In progress| 02/08/2022  |
 |   6   | <a href="A06">A06</a>     | Processing in Linear Time   |    🔴  | In progress| 02/10/2022  |
 |   7   | <a href="A07">A07</a>     | Processing in Trie Tree Time   |    🔴  | In progress| 03/03/2022  |
