@@ -3,7 +3,7 @@
 |   #   | Folder | Assignment |    Status  | More Details
 | :---: | ----------- | ---------------------- |    ----------- |----------- |
 |   1   | <a href="https://docs.google.com/spreadsheets/d/1SvxY7V82s1o-MfIch2vWafe0FpAWLEObwlbyb2lK7yk/edit#gid=0">A01</a>     | Getting Setup    |   🟢  | Completed |
-|   2   | <a href="../../">A02</a>     | Github Setup    |    🟢  | Completed|
+|   2   | <a href="../../../">A02</a>     | Github Setup    |    🟢  | Completed|
 |   3a   | <a href="A03a">A03a</a>     | Banner Page   |    🟢  | Completed|
 |   3b   | <a href="A03b">A03b</a>     | Commenting C++ Code   |    🟢  | Completed|
 |   4   | <a href="A04">A04</a>     | Resizing the Stack   |    🔴  | In progress|
