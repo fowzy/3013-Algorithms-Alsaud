@@ -11,4 +11,4 @@
 |   6   | <a href="A06">A06</a>     | Processing in Linear Time   |    🔴  | In progress| 02/10/2022  |
 |   7   | <a href="A07">A07</a>     | Processing in Trie Tree Time   |    🔴  | In progress| 03/03/2022  |
 |   8   | <a href="A08">A08</a>     | Test 2 / Study Guide   |    🔴  | In progress| TBD  |
-|   9   | <a href="A09">A09</a>     | Loading...   |    🔴  | In progress| 01/18/2022  |
+|   9   | <a href="A09">A09</a>     | Loading...   |    🔴  | In progress| TBD  |
