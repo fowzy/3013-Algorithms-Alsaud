@@ -52,7 +52,6 @@ private:
   vector<int> v;                 // vector to get the max
   // top = number of items in the stack + 1
   // size = array size
-
   // size = 100
   // (top + 1) / size
 
