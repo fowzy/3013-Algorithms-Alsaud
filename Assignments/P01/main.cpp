@@ -462,7 +462,7 @@ int main(int argc, char **argv)
   // if(argc > 1){
   ArrayStack stack;                 // create stack object
   ifstream inFile("nums_test.dat"); // reading from our input file
-  ofstream outFile("output.txt");   // writing to our output file
+  ofstream outFile("output");   // writing to our output file
   int num;                          // variable to hold the number
   int counter = 0;                  // number of commands processed (how many values read from the input file)
   stack.setConfiguration(argv);     // set the configuration for the stack
