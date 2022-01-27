@@ -1,8 +1,14 @@
+/*
+Name        :   Fowzy Alsaud
+Assignment   :   Commenting A3b - 
+Class       :   3013-Algorithms
+Date        :   Jan, 18th, 2021
+*/
 #include <iostream>
 
 using namespace std;
 
-int A[100];
+int A[100]; // Define integer with size of 100
 
 // Making new data type to define the Node which has a variable and pointer
 struct Node
@@ -41,12 +47,12 @@ public:
     {
         // allocate new memory and init node
         Node *Temp = new Node(val); // we allocated memory for our temporary Node
-
+        // If the head and tail is empty then allocate memory for tail and head
         if (!Head && !Tail)
         { 
             Head = Tail = Temp;
         }
-        else
+        else // if the head or tail is not empty then allocate memory for the next node tail
         {
             Tail->next = Temp;
             Tail = Temp;
@@ -61,7 +67,7 @@ public:
 
         // figure out where it goes in the list
 
-        Temp->next = Head;
+        Temp->next = Head; 
         Head = Temp;
         if (!Tail)
         {
@@ -148,7 +154,7 @@ public:
             return Temp->x;
         }
     }
-    // friend class to
+    // friend class to overload << cout operator and be able to print out what's in the List
     friend ostream &operator<<(ostream &os, List L)
     {
         os << L.Print();
