@@ -1,0 +1,10 @@
+1   >> dismiss
+2   >> add to the stack
+3   >> odd then remove 2 from the stack
+4   >> add to the stack
+5   >> odd then remove 5 from the stack
+6   >> add to the stack
+// so we suppose to have the stack [1,0,0]
+// size 3 
+// resized 5
+// max 3

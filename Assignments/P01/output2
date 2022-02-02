@@ -1,0 +1,18 @@
+######################################################################
+		Assignment 4 - Resizing the Stack
+		CMPS 3013
+		Fowzy Alsaud
+
+		Config Params:
+			Full Threshold: 0.85
+			Shrink Threshold: 0.15
+			Grow Ratio : 2
+			Shrink Ratio : 0.5
+
+		Processed 9
+
+		Max Stack Size: 0
+		End Stack Size: 6
+		Stack Resized: 1 times
+######################################################################
+0.666667

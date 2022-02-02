@@ -16,13 +16,35 @@
 //    - Place your re-written main.cpp file into this P01 folder.
 //    - Add your folder with all input and/or output files to your github repo.
 //    - Banner
-//
+// Files:
+//    - main.cpp
+//    - my_test.dat
+//    - nums_test.dat
+//    - nums.dat
+//    - output
+//    TODO: MAKE SURE YOU CHANGE DEFAULT SIZE FROM 3 TO 10
+//    TODO: Have better understanding full threshold & shrink threshold
+//    TODO: Do I have to update the grow and shrink ratio when we reach to that
+//          limition (fullThreshold & shrinkThreshold) that are provided by the user?
+//            what I mean by that is keeping the grow and shrink ration as default and updating them
+//            whenever the user user reach to the full threshold or shrink threshold and who goes first?
+//            let's say ./main.cpp 0.70 0.20 1.25 .75
+//            so if we start the stack from size 10(default) and when we gets to 70% full which is 7 items
+//            then we have to update my grow ratio to 1 instead of 2 (default) and leave the shrink alone
+//            till I get to the shrink status(which is if the stack reach %20 of the stack size)?
+//            so if I get to 7 items my stack it will switch the grow ratio to 1
+//            and keep going! so if the stack reachs 10 items(%100) it will be setting 1 grow
+//            and let's say we remove items till I get to 2 items (which is %20 of my 10 size stack)
+//            then I have change the shrink ratio to 1 instead of 0.5
+//            at the same times
 /////////////////////////////////////////////////////////////////////////////////
 #include <iostream> // cout, cin
 #include <fstream>  // for file I/O
 #include <stdlib.h> // atof
 #include <vector>   // vector
 using namespace std;
+
+double percentage; // global var. to follow up the size of my stack
 
 /**
  * ArrayStack
@@ -49,7 +71,9 @@ private:
   double shrinkRatio = 0.5;      // how much to shrink the stack (e.g. .5 = half its size)
   int maxSize = 0;               // max size of the stack ever reached
   int timesResized = 0;          // number of times the stack has been resized (grown or reduced)
-  vector<int> v;                 // vector to get the max
+  double g;
+  double s;
+  vector<int> v; // vector to get the max
   // top = number of items in the stack + 1
   // size = array size
   // size = 100
@@ -60,7 +84,7 @@ public:
    * ArrayStack
    *
    * Description:
-   *      Constructor no params
+   *      Default Constructor no params
    *
    * Params:
    *     - None
@@ -79,7 +103,7 @@ public:
    * ArrayStack
    *
    * Description:
-   *      Constructor size param
+   *      Overloaded Constructor size param
    *
    * Params:
    *     - int size
@@ -159,12 +183,14 @@ public:
    */
   int Pop()
   {
+    ifAmFull();
     // Here if the stack is not empty and is bigger than or equal to 10 then it will pop the item else it will break
-    if (!Empty() && CheckResize())
+    if (!Empty())
     {
       ContainerShrink();
-      v.push_back(maxSize);
       return A[top--];
+    }else{
+      cout<<"empty"<<endl;
     }
 
     return -99; // some sentinel value
@@ -206,6 +232,7 @@ public:
    */
   bool Push(int x)
   {
+    ifAmFull();
     if (Full())
     {
       ContainerGrow();
@@ -214,15 +241,13 @@ public:
     {
       A[++top] = x;
       v.push_back(size);
-      // checkResize();
       return true;
     }
-
     return false;
   }
 
   /**
-   * Public void: CheckResize
+   * Public bool: CheckResize
    *
    * Description: Basically its a boolean function that will give you a true if the stack is equal or larger than 10
    * Else it will return false
@@ -232,15 +257,16 @@ public:
    *      NULL
    *
    * Returns:
-   *      TRUE OR FALSE
+   *      True or False
    */
   bool CheckResize()
   {
-    if (size > 3)
+    // if the size is smaller or equal to 10 then tell the user is true
+    if ((double)top/(double)size )
     {
       return 1;
     }
-    else
+    else // return false if the size is bigger than 10
     {
       return 0;
     }
@@ -261,16 +287,20 @@ public:
    */
   void ContainerShrink()
   {
-    int newSize = size - 1;       // new size
-    int *temp = new int[newSize]; // allocate new memory
-    for (int i = 0; i < top; i++)
+    if (!CheckResize())
     {
-      temp[i] = A[i]; // copy old data
+      int newSize = size / shrinkRatio; // new size
+      int *temp = new int[newSize];     // allocate new memory
+      for (int i = 0; i < top; i++)
+      {
+        temp[i] = A[i]; // copy old data
+      }
+      delete[] A;     // delete old memory
+      size = newSize; // update size
+      cout<<"size: "<<size<<endl;
+      A = temp;       // update pointer
+      timesResized++; // calculate the number of times the stack has been resized}}
     }
-    delete[] A;     // delete old memory
-    size = newSize; // update size
-    A = temp;       // update pointer
-    timesResized++; // calculate the number of times the stack has been resized
   }
 
   /**
@@ -288,14 +318,15 @@ public:
    */
   void ContainerGrow()
   {
-    int newSize = size * 2;    // double size of original
-    int *B = new int[newSize]; // allocate new memory
+    int newSize = size * growRatio; // double size of original
+    int *B = new int[newSize];      // allocate new memory
     for (int i = 0; i < top; i++)
     { // copy values to new array
       B[i] = A[i];
     }
     delete[] A;     // delete old array
     size = newSize; // save new size
+    cout<<"size: "<<size<<endl;
     A = B;          // reset array pointer
     timesResized++; // calculate the number of times the stack has been resized
   }
@@ -317,7 +348,6 @@ public:
   {
     return size;
   }
-
   /**
    * Public void: setParams
    *
@@ -337,8 +367,8 @@ public:
     {
       fullThreshold = atof(params[1]);
       shrinkThreshold = atof(params[2]);
-      growRatio = atof(params[3]);
-      shrinkRatio = atof(params[4]);
+      g = atof(params[3]);
+      s = atof(params[4]);
     }
   }
   /**
@@ -420,11 +450,11 @@ public:
    *      NULL
    *
    * Returns:
-   *      double
+   *      int
    */
   int getMax()
   {
-    int max = v[0];
+    int max = v[0]; // initialize max by the first element in the vector
     for (int i = 0; i < v.size(); i++)
     {
       if (A[i] > max)
@@ -433,7 +463,7 @@ public:
       }
     }
     return max;
-    v.clear();
+    v.clear(); // delete or clear the vector to save memory
   }
   /**
    * Public int: getTimesResized
@@ -452,6 +482,44 @@ public:
   {
     return timesResized;
   }
+  /**
+   * Public double: getPercent
+   *
+   * Description:
+   *      Get the percentage of the size of the stack
+   *
+   *
+   * Params:
+   *      NULL
+   *
+   * Returns:
+   *      double
+   */
+  double getPercent()
+  {
+    return ((double)top + 1) / (double)size;
+  }
+  /**
+   * Public void: ifAmFull
+   *
+   * Description:
+   *      Check if the stack apply the status that user provided us
+   *
+   *
+   * Params:
+   *      NULL
+   *
+   * Returns:
+   *      NULL
+   */
+  void ifAmFull()
+  {
+    // the program with this if statement it will apply if full th
+    if (fullThreshold == getPercent())
+      growRatio = g;
+    if (shrinkRatio == getPercent())
+      shrinkRatio = s;
+  }
 };
 
 // MAIN DRIVER
@@ -459,18 +527,16 @@ public:
 int main(int argc, char **argv)
 {
   // if(argc > 1){
-  ArrayStack stack;                 // create stack object
+  ArrayStack stack;               // create stack object
   ifstream inFile("nums_test.dat"); // reading from our input file
-  ofstream outFile("output");       // writing to our output file
-  int num;                          // variable to hold the number
-  int counter = 0;                  // number of commands processed (how many values read from the input file)
-  stack.setConfiguration(argv);     // set the configuration for the stack
-  while (inFile >> num)             // while loop to read the input file number by number
+  ofstream outFile("output");     // writing to our output file
+  int num;                        // variable to hold the number
+  int counter = 0;                // number of commands processed (how many values read from the input file)
+  stack.setConfiguration(argv);   // set the configuration for the stack
+  while (inFile >> num)           // while loop to read the input file number by number
   {
-    int even = num % 2 == 0;
-    int odd = num % 2 == 1;
-    int peak = stack.Peek();
-    if (even) // if the number is even then push it to the stack
+    int even = num % 2 == 0; // define even number
+    if (even)                // if the number is even then push it to the stack
     {
       stack.Push(num);
     }
@@ -478,53 +544,30 @@ int main(int argc, char **argv)
     {
       stack.Pop();
     }
+    cout << stack.getPercent() << endl;
     counter++; // increment the counter to count the number of commands we processed
   }
-  stack.Print();
+  stack.Print(); // print the stack to confirm the stack has the right items
 
   // Print out the Output file into the output file "output.txt"
   outFile << "######################################################################" << endl;
   outFile << "\t\tAssignment 4 - Resizing the Stack" << endl;
   outFile << "\t\tCMPS 3013" << endl;
-  outFile << "\t\tFowzy Alsaud" << endl << endl;
+  outFile << "\t\tFowzy Alsaud" << endl
+          << endl;
   outFile << "\t\tConfig Params:" << endl;
   outFile << "\t\t\tFull Threshold: " << stack.getFullThreshold() << endl;
   outFile << "\t\t\tShrink Threshold: " << stack.getShrinkThreshold() << endl;
   outFile << "\t\t\tGrow Ratio : " << stack.getGrowRatio() << endl;
-  outFile << "\t\t\tShrink Ratio : " << stack.getShrinkRatio() << endl << endl;
-  outFile << "\t\tProcessed " << counter << endl << endl;
+  outFile << "\t\t\tShrink Ratio : " << stack.getShrinkRatio() << endl
+          << endl;
+  outFile << "\t\tProcessed " << counter << endl
+          << endl;
   outFile << "\t\tMax Stack Size: " << stack.getMax() << endl;
   outFile << "\t\tEnd Stack Size: " << stack.getSize() << endl;
   outFile << "\t\tStack Resized: " << stack.getTimesResized() << " times" << endl;
   outFile << "######################################################################" << endl;
-  //}
-  // ********************************************************
-  // ***  The following code is for testing purposes only ***
-  // ********************************************************
-  // int r = 0;
-  // stack.Print();
-  // cout << "Size of Stack is : " << stack.getSize() << endl;
-  // for (int i = 0; i < 20; i++)
-  // {
-  //   r = rand() % 100;
-  //   r = i + 1;
-  //   if (!stack.Push(r))
-  //   {
-  //     cout << "Push failed" << endl;
-  //   }
-  // }
-  // stack.Print();
-  // cout << "Size of Stack is : " << stack.getSize() << endl;
-  // for (int i = 0; i < 20; i++)
-  // {
-  //   stack.Pop();
-  // }
-  // stack.Print();
-  // cout << "Size of Stack is : " << stack.getSize() << endl;
+  // cout << stack.getPercent() << endl;
 
-  // double parm[4];
-  // for (int i = 1; i < argc; ++i)
-  // 	parm[i] = atof(argv[i]);
-  // ********************************************************
   return 0;
 }
