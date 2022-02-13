@@ -27,6 +27,8 @@
 #include "mygetch.hpp"
 #include "termcolor.hpp"
 #include "timer.hpp"
+#include "LinkedList.hpp"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -105,6 +107,7 @@ vector<string> FindAnimals(vector<string> array, string substring) {
 }
 
 int main() {
+    wordNodes wordLists;     // Creating wordList
     char k;                 // holder for character being typed
     string word = "";       // var to concatenate letters to
     vector<string> animals; // array of animal names
