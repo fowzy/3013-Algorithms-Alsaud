@@ -1,4 +1,7 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
+#include <algorithm>
+
 using namespace std;
 // Define a node as word Node
 struct wordNode
@@ -11,27 +14,28 @@ struct wordNode
         data = s;
         next = NULL;
     }
+    wordNode()
+    {
+        next = NULL;
+    }
 };
 
 // Make a linked list and call it wordNodes
 class wordNodes
 {
-// private:
-    // wordNode *head; // pointer points to the head of the list
-    // wordNode *current;
-    // int size;
-
-public:
+private:
     wordNode *head; // pointer points to the head of the list
     wordNode *current;
     wordNode *temp;
     int size;
+
+public:
     // Default Constructor
     wordNodes()
     {
         head = NULL;
         current = NULL;
-        temp= NULL;
+        temp = NULL;
         size = 0;
     }
     // Function that will insert a new word to the linked list
@@ -39,15 +43,14 @@ public:
     {
         wordNode *newWord = new wordNode(s);
         if (head == NULL)
-        { // if the head is empty node
-            head = newWord;     // then head is equal to the new node (value = newWord, and Pointer is NULL)
-            current = newWord;  // current is pointing at the new word
+        {                      // if the head is empty node
+            head = newWord;    // then head is equal to the new node (value = newWord, and Pointer is NULL)
+            current = newWord; // current is pointing at the new word
         }
         else // if the head is not empty
         {
             current->next = newWord; // it will make the current node next points to the new word
-            current = newWord; // then updated the value of the new current
-
+            current = newWord;       // then updated the value of the new current
         }
         size++; // count the size of the linked list
     }
@@ -60,13 +63,42 @@ public:
         else
             while (temp != NULL)
             {
-                cout << temp->data << "\t";
+                cout << temp->data << endl;
                 // cout << temp->next << endl;
                 temp = temp->next;
             }
     }
     // function to return the size of the linked list
-    int Size(){
+    int Size()
+    {
         return size;
+    }
+    /**
+     * Description:
+     *      Finds partial matches in an array of strings and returns them. It
+     *      doesn't matter where in the string the match is.
+     * Params:
+     *      vector<string>  array       - array to search
+     *      string          substring   - substring to search for in each word
+     *
+     * Returns:
+     *      vector<string> - holding all the matches to substring
+     */
+    vector<string> FindAnimals(wordNodes array, string substring)
+    {
+        vector<string> matches; // to hold any matches
+        size_t found; // size_t is an integer position of
+                      // found item. -1 if its not found.
+        wordNode *temp = head;
+        while (temp != NULL)
+        {
+            found = temp->data.find(substring);
+            if (found != string::npos && found == 0) // if found >= 0 (its found then)
+            {
+                matches.push_back(temp->data);
+            }
+            temp = temp->next;
+        }
+        return matches;
     }
 };
