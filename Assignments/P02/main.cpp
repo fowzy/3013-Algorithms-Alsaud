@@ -5,9 +5,14 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-
+#include <vector>
+#include <iomanip>
 using namespace std;
-
+/*
+are pointers suppos to be in private
+can we do overloaded operator to print the linked list as list[i]
+coloring
+*/
 /**
  * Description:
  *      Originally wrote this to count size of input file so
@@ -49,49 +54,21 @@ wordNodes LoadAnimals(string file_name)
     return wordLists;
 }
 
-/**
- * Description:
- *      Finds partial matches in an array of strings and returns them. It
- *      doesn't matter where in the string the match is.
- * Params:
- *      vector<string>  array       - array to search
- *      string          substring   - substring to search for in each word
- *
- * Returns:
- *      vector<string> - holding all the matches to substring
- */
-wordNodes FindAnimals(wordNodes array, string substring)
-{
-    wordNodes matches; // to hold any matches
-    size_t found;      // size_t is an integer position of
-                       // found item. -1 if its not found.
-    array.temp = array.head;
-    while (array.temp != NULL)
-    {
-        found = array.temp->data.find(substring);
-        if (found != string::npos)
-        { // if found >= 0 (its found then)
-            matches.Insert(array.temp->data);
-        }
-        array.temp = array.temp->next;
-    }
-    return matches;
-}
-
 int main()
 {
-    char k;            // holder for character being typed
-    string word = "";  // var to concatenate letters to
-    wordNodes animals; // array of animal names
-    wordNodes matches; // any matches found in vector of animals
-
+    char k;                 // holder for character being typed
+    string word = "";       // var to concatenate letters to
+    wordNodes animals;      // array of animal names
+    vector<string> matches; // any matches found in vector of animals
+    int loc;                // location of substring to change its color
+    int show10words = 0;    // flag to show 10 words at a time
+    int matchesFound = 0;   // number of matches found
     ofstream fout("temp.txt");
 
     Timer T;   // create a timer
     T.Start(); // start it
 
     animals = LoadAnimals("dictionary.txt");
-
     T.End(); // end the current timer
     // print out how long it took to load the animals file
     cout << T.Seconds() << " seconds to read in and print json" << endl;
@@ -109,9 +86,7 @@ int main()
         if ((int)k == 127)
         {
             if (word.size() > 0)
-            {
                 word = word.substr(0, word.size() - 1);
-            }
         }
         else
         {
@@ -126,42 +101,61 @@ int main()
             // Any letter with ascii value < 97 is capital so we
             // lower it.
             if ((int)k < 97)
-            {
                 k += 32;
-            }
             word += k; // append char to word
         }
-
+        // cout << word << endl;
         // Find any animals in the array that partially match
         // our substr word
-        matches = FindAnimals(animals, word);
+        matches = animals.FindAnimals(animals, word);
+        // wordNode *t; // = new wordNode();
+        // cout << t->data << endl;
+        // cout << t->data << endl;
 
-        if ((int)k != 32)
+        if (((int)k != 32))
         { // if k is not a space print it
             T.End();
-            cout << T.NanoSeconds() << " nano, "<< T.MilliSeconds() << " milli seconds, " << T.Seconds() << " seconds." << endl;
+            cout << T.NanoSeconds() << " nano,\t" << T.MilliSeconds() << ",\t" << T.Seconds() << ",seconds." << endl;
             cout << "Keypressed: " << termcolor::blue << k << " = " << (int)k << termcolor::reset << endl;
             cout << "Current Substr: " << termcolor::red << word << termcolor::reset << endl;
             cout << "Animals Found: ";
             cout << termcolor::green;
             // This prints out all found matches
-            // matches.Print();
-            int matchCounter =0;
-            matches.temp = matches.head;
-            while (matches.temp != NULL)
+
+            for (int i = 0; i < matches.size(); i++)
             {
-                if(matchCounter <= 10){
-                cout << matches.temp->data <<"\t";
-                // cout << matches.temp->next << endl;
-                matches.temp = matches.temp->next;
-                }
-								else{
-									break;
-								}
-                matchCounter++;
+
+                    // find the substring in the word
+                    loc = matches[i].find(word);
+                    // if its found
+
+                    // print one letter at a time turning on red or green
+                    //  depending on if the matching subtring is being printed
+                    for (int j = 0; j < matches[i].size(); j++)
+                    {
+                        // if we are printing the substring turn it red
+                        if (j >= loc && j <= loc + word.size() - 1)
+                        {
+                            cout << termcolor::red;
+                        }
+                        else
+                        {
+                            cout << termcolor::green;
+                        }
+                        if (loc != string::npos &&matchesFound < 10)
+                        {
+                            cout << matches[i][j];
+                        }
+                        cout << termcolor::green;
+                    }
+                    cout << "\t";
+
             }
             cout << termcolor::reset << endl
                  << endl;
+            cout << fixed;
+            cout << setprecision(2);
+            cout << matches.size() << " words found in " << (double)T.Seconds() << " seconds." << endl;
         }
     }
     return 0;
