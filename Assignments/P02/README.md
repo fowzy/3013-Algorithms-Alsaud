@@ -10,7 +10,7 @@ Due: 02-10-2022
 | :---: | --------------- | -------------------------------------------------- |
 |   1   | [README.md](README.md)         | README file.      |
 |   2   | [Banner](Banner)  | Banner Page.         |
-|   3   | [main.cpp](main.cpp) | CPP File (Commented version). |
+|   3   | [P02.cpp](P02.cpp) | CPP File (Commented version). |
 
 ### Requirements
 - 
