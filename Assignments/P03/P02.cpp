@@ -123,14 +123,9 @@ int main() {
             cout << termcolor::red << word << termcolor::reset << endl;
             cout << matches.size() << " words found in " << (double)T.Seconds()/60<< endl;
             cout << termcolor::green;
-            int counterMatches=0;
             // This prints out all found matches
             for (int i = 0; i < matches.size(); i++) {
-                if(counterMatches <10)
-                    cout << matches[i] << " ";
-                else
-                    break;
-                counterMatches++;
+                cout << matches[i] << " ";
             }
             cout << termcolor::reset << endl
                  << endl;
