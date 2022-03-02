@@ -14,6 +14,7 @@ struct wordNode
         data = s;
         next = NULL;
     }
+    // Default Constructor
     wordNode()
     {
         next = NULL;
@@ -24,12 +25,13 @@ struct wordNode
 class wordNodes
 {
 private:
-    wordNode *head; // pointer points to the head of the list
-    wordNode *current;
-    wordNode *temp;
-    int size;
+    wordNode *head;     // pointer points to the head of the list
+    wordNode *current;  // pointer to see where we at 
+    wordNode *temp;     // temp pointer
+    int size;           // variable to keep up with the size of my linked lists
 
 public:
+    int counterMatches=0;
     // Default Constructor
     wordNodes()
     {
