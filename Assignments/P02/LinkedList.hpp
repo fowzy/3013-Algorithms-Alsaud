@@ -86,7 +86,7 @@ public:
      * Returns:
      *      vector<string> - holding all the matches to substring
      */
-    vector<string> FindAnimals(wordNodes array, string substring)
+    vector<string> FindAnimals(string substring)
     {
         vector<string> matches; // to hold any matches
         size_t found; // size_t is an integer position of

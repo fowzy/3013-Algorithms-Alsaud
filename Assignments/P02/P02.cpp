@@ -18,11 +18,12 @@ using namespace std;
  *      using it anyway!
  * Params:
  *      string file_name - file to get the line count
- * 
+ *
  * Returns:
  *      int - line count
  */
-int CountLines(string file_name) {
+int CountLines(string file_name)
+{
     ifstream inFile(file_name);
     return count(istreambuf_iterator<char>(inFile), istreambuf_iterator<char>(), '\n');
 }
@@ -33,7 +34,7 @@ int CountLines(string file_name) {
  *      with one word per line. So words must be delimited by newlines '\n'
  * Params:
  *      string file_name - file to get the line count
- * 
+ *
  * Returns:
  *      int - line count
  */
@@ -50,7 +51,6 @@ wordNodes LoadAnimals(string file_name)
     return wordLists;
 }
 
-
 /**
  * Description:
  *      Finds partial matches in an array of strings and returns them. It
@@ -58,7 +58,7 @@ wordNodes LoadAnimals(string file_name)
  * Params:
  *      vector<string>  array       - array to search
  *      string          substring   - substring to search for in each word
- * 
+ *
  * Returns:
  *      vector<string> - holding all the matches to substring
  */
@@ -80,28 +80,34 @@ wordNodes LoadAnimals(string file_name)
 //         return matches;
 //     }
 
-int main() {
+int main()
+{
     char k;                 // holder for character being typed
     string word = "";       // var to concatenate letters to
-    wordNodes animals; // array of animal names
+    wordNodes animals;      // array of animal names
     vector<string> matches; // any matches found in vector of animals
     ofstream fout("temp.txt");
-    Timer T;   // create a timer
+    Timer T; // create a timer
     T.Start(); // start it
-
     animals = LoadAnimals("dictionary.txt");
 
     // While capital Z is not typed keep looping
-    while ((k = getch()) != 'Z') {
+    while ((k = getch()) != 'Z')
+    {
         // Tests for a backspace and if pressed deletes
         // last letter from "word".
-        if ((int)k == 127) {
-            if (word.size() > 0) {
+        if ((int)k == 127)
+        {
+            if (word.size() > 0)
+            {
                 word = word.substr(0, word.size() - 1);
             }
-        } else {
+        }
+        else
+        {
             // Make sure a letter was pressed and only letter
-            if (!isalpha(k)) {
+            if (!isalpha(k))
+            {
                 cout << "Letters only!" << endl;
                 continue;
             }
@@ -109,7 +115,8 @@ int main() {
             // We know its a letter, lets make sure its lowercase.
             // Any letter with ascii value < 97 is capital so we
             // lower it.
-            if ((int)k < 97) {
+            if ((int)k < 97)
+            {
                 k += 32;
             }
             word += k; // append char to word
@@ -117,16 +124,19 @@ int main() {
 
         // Find any animals in the array that partially match
         // our substr word
-        matches = animals.FindAnimals(animals, word);
+        matches = animals.FindAnimals(word);
 
-        if ((int)k != 32) { // if k is not a space print it
+        if ((int)k != 32)
+        { // if k is not a space print it
             cout << termcolor::red << word << termcolor::reset << endl;
-            cout << matches.size() << " words found in " << (double)T.Seconds()/60<< endl;
+            cout << fixed << setprecision(3);
+            cout << matches.size() << " words found in " << (double)T.MilliSeconds()/10000 << " seconds" << endl;
             cout << termcolor::green;
-            int counterMatches=0;
+            int counterMatches = 0;
             // This prints out all found matches
-            for (int i = 0; i < matches.size(); i++) {
-                if(counterMatches <10)
+            for (int i = 0; i < matches.size(); i++)
+            {
+                if (counterMatches < 10)
                     cout << matches[i] << " ";
                 else
                     break;
