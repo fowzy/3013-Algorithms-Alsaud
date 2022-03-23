@@ -11,7 +11,11 @@ Updated: 03-23-2022
 | :---: | --------------- | -------------------------------------------------- |
 |   1   | [README.md](README.md)         | README file.      |
 |   2   | [Banner](Banner)  | Banner Page.         |
-|   3   | [main.cpp](main.cpp) | CPP File (Commented version). |
+|   3   | [main.cpp](main.cpp) | CPP File for the program (Commented version). |
+|   4   | [timer.hpp](timer.hpp) | Class to calculate the time. |
+|   5   | [mygetch.hpp](mygetch.hpp) | Class to get the stroke of the keyboards. |
+|   6   | [json.hpp](json.hpp) | Class to read and write json files. |
+|   7   | [termcolor.hpp](json.hpp) | Class to color the terminal (results). |
 
 ### Requirements
 - Read json files.
