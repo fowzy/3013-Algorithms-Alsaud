@@ -1,5 +1,5 @@
 # Program 3 -  Processing in Trie Tree Time
-Due: 03/03/2022
+Due: 03/03/2022<br>
 Updated: 03-23-2022
 ### Description:
 > Linear Time Lookup: This project is about loading a Trie with dictionary words, then timing how it takes to look them up. We are doing this with the knowledge that this is slow, and we plan on applying our "lookup" code to other backend data structures with better performance. So, keep this in mind when designing your program.
